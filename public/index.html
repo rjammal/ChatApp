@@ -7,25 +7,25 @@
     <script type="text/javascript" charset="utf-8">
     // io is global
     var socket = io("http://10.52.196.1");
-    socket.on('server-msg', function(data){ 
-        console.log("server says:")
-        console.log(data);
-    });
-    socket.emit("client-msg", {message: "lol im a client"});
-    
+    // var nicknames = {};
+//     var guestNum = 1;
+
     $(function(){
         $('#chat-button').click(function(event){
             event.preventDefault();
             var myText = $('#chat-message').val();
             var myName = $("#nameNameName").val();
-            console.log("is jQuery correct? " + myText);
+            // if (typeof nicknames[socket.io.engine.id] === "undefined") {
+//                 nicknames[socket.io.engine.id] = "guest" + guestNum;
+//                 guestNum++;
+//             }
             socket.emit('chat-submit', { message: myText, author: myName });
         });
     })
     
     socket.on("chat-broadcast", function(data){
         var $li = $('<li>');
-        $li.html(data.author + ": " + data.message);
+        $li.text(data.author + ": " + data.message);
         $('ul#previous-messages').append($li);
         $('#chat-message').val("")
     });
